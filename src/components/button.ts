@@ -21,5 +21,17 @@ export const buttonComponents = {
     "@apply border": {},
     borderColor: "rgb(var(--onion-border) / 1)",
     backgroundColor: "transparent"
+  },
+  ".btn-ghost": {
+    backgroundColor: "transparent"
+  },
+  ".btn-ghost:hover": {
+    backgroundColor: "rgb(var(--onion-muted) / 1)"
+  },
+  ".btn-sm": {
+    "@apply h-8 px-3 text-xs": {}
+  },
+  ".btn-lg": {
+    "@apply h-12 px-6 text-base": {}
   }
 };

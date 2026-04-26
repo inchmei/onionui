@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>onionui demo</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="mx-auto max-w-5xl space-y-8 p-6">
+    <header class="navbar">
+      <div class="navbar-start">
+        <div class="avatar avatar-sm">
+          <span class="avatar-placeholder">OU</span>
+        </div>
+        <span class="font-semibold">onionui</span>
+      </div>
+      <nav class="navbar-center">
+        <a class="navbar-link">Docs</a>
+        <a class="navbar-link">Components</a>
+        <a class="navbar-link">Themes</a>
+      </nav>
+      <div class="navbar-end">
+        <button class="btn btn-ghost btn-sm">Sign in</button>
+        <button class="btn btn-primary btn-sm">Get started</button>
+      </div>
+    </header>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Alerts</h2>
+      <div class="alert alert-info">This is an info alert.</div>
+      <div class="alert alert-success">Your profile is updated.</div>
+      <div class="alert alert-warning">Your trial ends in 2 days.</div>
+      <div class="alert alert-error">Something went wrong.</div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Buttons and Badge</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="btn">Default</button>
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-ghost">Ghost</button>
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="badge">Default</span>
+        <span class="badge badge-primary">Primary</span>
+        <span class="badge badge-outline">Outline</span>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Tabs and Dropdown</h2>
+      <div class="tabs">
+        <button class="tab tab-active">Overview</button>
+        <button class="tab">API</button>
+        <button class="tab">Examples</button>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-outline btn-sm">Open menu</button>
+        <div class="dropdown-content">
+          <button class="menu-item">Profile</button>
+          <button class="menu-item">Billing</button>
+          <button class="menu-item">Log out</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Card, Input and Avatar</h2>
+      <div class="card max-w-md">
+        <h3 class="card-title">Create project</h3>
+        <div class="card-body">
+          <input class="input" placeholder="Project name" />
+          <input class="input" placeholder="Owner email" />
+        </div>
+        <div class="card-actions">
+          <div class="avatar avatar-sm">
+            <span class="avatar-placeholder">EC</span>
+          </div>
+          <button class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="avatar avatar-sm"><span class="avatar-placeholder">A</span></div>
+        <div class="avatar"><span class="avatar-placeholder">B</span></div>
+        <div class="avatar avatar-lg"><span class="avatar-placeholder">C</span></div>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Modal</h2>
+      <button class="btn btn-primary btn-sm" data-modal-open>Open modal</button>
+      <div class="modal" id="demo-modal" aria-hidden="true">
+        <div class="modal-box">
+          <h3 class="modal-title">Delete this project?</h3>
+          <p class="modal-body">
+            This action cannot be undone. All data will be removed permanently.
+          </p>
+          <div class="modal-action">
+            <button class="btn btn-ghost" data-modal-close>Cancel</button>
+            <button class="btn btn-primary" data-modal-close>Confirm</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const modal = document.getElementById("demo-modal");
+      const openButton = document.querySelector("[data-modal-open]");
+      const closeButtons = document.querySelectorAll("[data-modal-close]");
+
+      const openModal = () => {
+        modal.classList.add("modal-open");
+        modal.setAttribute("aria-hidden", "false");
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("modal-open");
+        modal.setAttribute("aria-hidden", "true");
+      };
+
+      openButton?.addEventListener("click", openModal);
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", closeModal);
+      });
+
+      modal?.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>

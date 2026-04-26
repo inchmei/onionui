@@ -32,6 +32,8 @@
   "scripts": {
     "build": "bun run ./scripts/build.ts",
     "check": "bunx tsc --noEmit",
+    "demo:build": "bun run build && bunx @tailwindcss/cli@4.2.4 -i ./example/input.css -o ./example/output.css",
+    "demo:watch": "bun run build && bunx @tailwindcss/cli@4.2.4 -i ./example/input.css -o ./example/output.css --watch",
     "prepublishOnly": "bun run check && bun run build"
   },
   "peerDependencies": {
@@ -39,6 +41,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@tailwindcss/cli": "^4.1.5",
     "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3"
   }
