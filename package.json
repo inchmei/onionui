@@ -1,0 +1,45 @@
+{
+  "name": "onionui",
+  "version": "0.1.0",
+  "description": "A daisyUI-like component library built with pure Tailwind CSS plugin.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "tailwindcss",
+    "daisyui",
+    "ui",
+    "components",
+    "plugin"
+  ],
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "scripts": {
+    "build": "bun run ./scripts/build.ts",
+    "check": "bunx tsc --noEmit",
+    "prepublishOnly": "bun run check && bun run build"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.4.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tailwindcss": "^4.1.5",
+    "typescript": "^5.8.3"
+  }
+}
