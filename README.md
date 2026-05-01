@@ -1,12 +1,12 @@
 # onionui
 
-`onionui` is a daisyUI-inspired component library built as a pure Tailwind CSS plugin.
+`onionui` is a component library built as a pure Tailwind CSS plugin.
 
 ## Features
 
 - Pure Tailwind plugin (no runtime JS in your app)
-- Theme tokens via CSS variables (`light` / `dark`)
-- Ready classes for common UI patterns: `btn`, `alert`, `navbar`, `badge`, `tabs`, `dropdown`, `modal`, `avatar`, `card`, `input`
+- Theme tokens via CSS variables (`light` / `dark` / `mssp`)
+- Ready classes for component patterns: `btn`, `alert`, `navbar`, `badge`, `tabs`, `dropdown`, `modal`, `avatar`, `card`, `input`, `table`, `drawer`, `steps`, `toast`, and more
 - npm-ready package output (`esm` + `cjs` + typings)
 
 ## Install
@@ -24,7 +24,7 @@ import onionui from "onionui";
 
 export default {
   content: ["./src/**/*.{html,ts,tsx,js,jsx}"],
-  plugins: [onionui({ defaultTheme: "light" })]
+  plugins: [onionui({ defaultTheme: "mssp" })]
 } satisfies Config;
 ```
 
@@ -108,7 +108,7 @@ export default {
 Switch theme:
 
 ```html
-<html data-theme="dark"></html>
+<html data-theme="mssp"></html>
 ```
 
 ## Development

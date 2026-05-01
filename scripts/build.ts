@@ -23,6 +23,7 @@ await Bun.build({
 const dtsContent = `export declare const themes: {
   light: Record<string, string>;
   dark: Record<string, string>;
+  mssp: Record<string, string>;
 };
 export type OnionUIThemeName = keyof typeof themes;
 export type OnionUIPluginOptions = {

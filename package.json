@@ -1,7 +1,7 @@
 {
   "name": "@emiliachen/onionui",
   "version": "0.1.1",
-  "description": "A daisyUI-like component library built with pure Tailwind CSS plugin.",
+  "description": "A component library built with a pure Tailwind CSS plugin.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -21,7 +21,6 @@
   ],
   "keywords": [
     "tailwindcss",
-    "daisyui",
     "ui",
     "components",
     "plugin"

@@ -1,6 +1,6 @@
 export const navbarComponents = {
   ".navbar": {
-    "@apply flex min-h-14 w-full items-center justify-between gap-3 rounded-xl border px-4": {},
+    "@apply flex min-h-14 w-full items-center justify-between gap-3 rounded-[var(--onion-radius-box)] border px-4": {},
     borderColor: "rgb(var(--onion-border) / 1)",
     backgroundColor: "rgb(var(--onion-bg) / 1)",
     color: "rgb(var(--onion-fg) / 1)"
@@ -15,7 +15,7 @@ export const navbarComponents = {
     "@apply flex flex-1 items-center justify-end gap-2": {}
   },
   ".navbar-link": {
-    "@apply rounded-md px-3 py-2 text-sm transition-colors": {}
+    "@apply rounded-[var(--onion-radius-field)] px-3 py-2 text-sm transition-colors": {}
   },
   ".navbar-link:hover": {
     backgroundColor: "rgb(var(--onion-muted) / 1)"

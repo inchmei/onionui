@@ -1,141 +1,653 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>onionui demo</title>
+    <title>OnionUI</title>
     <link rel="stylesheet" href="./output.css" />
+    <style>
+      @font-face {
+        font-family: "Google Sans";
+        src: url("../assets/fonts/GoogleSans-Regular.woff2") format("woff2");
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: "Google Sans";
+        src: url("../assets/fonts/GoogleSans-Medium.woff2") format("woff2");
+        font-weight: 500;
+      }
+
+      @font-face {
+        font-family: "Google Sans";
+        src: url("../assets/fonts/GoogleSans-Bold.woff2") format("woff2");
+        font-weight: 600 700;
+      }
+
+      :root:has(.theme-controller[value="mssp"]:checked) .demo-shell {
+        background: rgb(245 245 245);
+      }
+
+      :root:has(.theme-controller[value="mssp"]:checked) .demo-header {
+        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      }
+
+      .theme-name {
+        display: none;
+      }
+
+      :root:has(.theme-controller[value="light"]:checked) .theme-name-light,
+      :root:has(.theme-controller[value="dark"]:checked) .theme-name-dark,
+      :root:has(.theme-controller[value="mssp"]:checked) .theme-name-mssp {
+        display: inline;
+      }
+
+      label:has(> .theme-controller:checked) {
+        background: rgb(var(--onion-primary) / 1);
+        border-color: rgb(var(--onion-primary) / 1);
+        color: rgb(var(--onion-primary-content) / 1);
+      }
+    </style>
   </head>
-  <body class="mx-auto max-w-5xl space-y-8 p-6">
-    <header class="navbar">
-      <div class="navbar-start">
-        <div class="avatar avatar-sm">
-          <span class="avatar-placeholder">OU</span>
-        </div>
-        <span class="font-semibold">onionui</span>
-      </div>
-      <nav class="navbar-center">
-        <a class="navbar-link">Docs</a>
-        <a class="navbar-link">Components</a>
-        <a class="navbar-link">Themes</a>
-      </nav>
-      <div class="navbar-end">
-        <button class="btn btn-ghost btn-sm">Sign in</button>
-        <button class="btn btn-primary btn-sm">Get started</button>
-      </div>
-    </header>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Alerts</h2>
-      <div class="alert alert-info">This is an info alert.</div>
-      <div class="alert alert-success">Your profile is updated.</div>
-      <div class="alert alert-warning">Your trial ends in 2 days.</div>
-      <div class="alert alert-error">Something went wrong.</div>
-    </section>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Buttons and Badge</h2>
-      <div class="flex flex-wrap items-center gap-2">
-        <button class="btn">Default</button>
-        <button class="btn btn-primary">Primary</button>
-        <button class="btn btn-outline">Outline</button>
-        <button class="btn btn-ghost">Ghost</button>
-        <button class="btn btn-primary btn-sm">Small</button>
-        <button class="btn btn-primary btn-lg">Large</button>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="badge">Default</span>
-        <span class="badge badge-primary">Primary</span>
-        <span class="badge badge-outline">Outline</span>
-      </div>
-    </section>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Tabs and Dropdown</h2>
-      <div class="tabs">
-        <button class="tab tab-active">Overview</button>
-        <button class="tab">API</button>
-        <button class="tab">Examples</button>
-      </div>
-      <div class="dropdown">
-        <button class="btn btn-outline btn-sm">Open menu</button>
-        <div class="dropdown-content">
-          <button class="menu-item">Profile</button>
-          <button class="menu-item">Billing</button>
-          <button class="menu-item">Log out</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Card, Input and Avatar</h2>
-      <div class="card max-w-md">
-        <h3 class="card-title">Create project</h3>
-        <div class="card-body">
-          <input class="input" placeholder="Project name" />
-          <input class="input" placeholder="Owner email" />
-        </div>
-        <div class="card-actions">
-          <div class="avatar avatar-sm">
-            <span class="avatar-placeholder">EC</span>
-          </div>
-          <button class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="avatar avatar-sm"><span class="avatar-placeholder">A</span></div>
-        <div class="avatar"><span class="avatar-placeholder">B</span></div>
-        <div class="avatar avatar-lg"><span class="avatar-placeholder">C</span></div>
-      </div>
-    </section>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Modal</h2>
-      <button class="btn btn-primary btn-sm" data-modal-open>Open modal</button>
-      <div class="modal" id="demo-modal" aria-hidden="true">
-        <div class="modal-box">
-          <h3 class="modal-title">Delete this project?</h3>
-          <p class="modal-body">
-            This action cannot be undone. All data will be removed permanently.
-          </p>
-          <div class="modal-action">
-            <button class="btn btn-ghost" data-modal-close>Cancel</button>
-            <button class="btn btn-primary" data-modal-close>Confirm</button>
+  <body class="min-h-screen">
+    <div class="demo-shell flex min-h-screen">
+      <input class="sidebar-toggle" id="sidebar-toggle-control" type="checkbox" />
+      <aside class="sidebar sticky top-0 hidden border-r lg:block">
+        <div class="sidebar-logo-area">
+          <div class="sidebar-logo-wrap">
+            <span class="sidebar-logo-text">OnionUI</span>
           </div>
         </div>
+
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections" open>
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-category.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-category-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Actions</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#actions-buttons">Buttons</a></li>
+                <li><a class="sidebar-menu-button" href="#actions-badges">Badges, Links, Kbd</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-category.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-category-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Actions</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#actions-buttons">Buttons</a></li>
+                  <li><a class="sidebar-menu-button" href="#actions-badges">Badges, Links, Kbd</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-bookmarks.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-bookmarks-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Data Display</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#data-table">Table</a></li>
+                <li><a class="sidebar-menu-button" href="#data-avatar">Avatar</a></li>
+                <li><a class="sidebar-menu-button" href="#data-progress">Progress</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-bookmarks.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-bookmarks-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Data Display</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#data-table">Table</a></li>
+                  <li><a class="sidebar-menu-button" href="#data-avatar">Avatar</a></li>
+                  <li><a class="sidebar-menu-button" href="#data-progress">Progress</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-registered.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-registered-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Forms</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#forms-inputs">Inputs</a></li>
+                <li><a class="sidebar-menu-button" href="#forms-select">Select</a></li>
+                <li><a class="sidebar-menu-button" href="#forms-toggles">Toggles</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-registered.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-registered-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Forms</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#forms-inputs">Inputs</a></li>
+                  <li><a class="sidebar-menu-button" href="#forms-select">Select</a></li>
+                  <li><a class="sidebar-menu-button" href="#forms-toggles">Toggles</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-group.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-group-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Navigation</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#navigation-navbar">Navbar</a></li>
+                <li><a class="sidebar-menu-button" href="#navigation-tabs">Tabs</a></li>
+                <li><a class="sidebar-menu-button" href="#navigation-steps">Steps</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-group.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-group-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Navigation</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#navigation-navbar">Navbar</a></li>
+                  <li><a class="sidebar-menu-button" href="#navigation-tabs">Tabs</a></li>
+                  <li><a class="sidebar-menu-button" href="#navigation-steps">Steps</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-shield-x.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-shield-x-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Feedback</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#feedback-alerts">Alerts</a></li>
+                <li><a class="sidebar-menu-button" href="#feedback-loading">Loading</a></li>
+                <li><a class="sidebar-menu-button" href="#feedback-toast">Toast</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-shield-x.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-shield-x-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Feedback</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#feedback-alerts">Alerts</a></li>
+                  <li><a class="sidebar-menu-button" href="#feedback-loading">Loading</a></li>
+                  <li><a class="sidebar-menu-button" href="#feedback-toast">Toast</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-cog.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-cog-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Layout</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#layout-collapse">Collapse</a></li>
+                <li><a class="sidebar-menu-button" href="#layout-accordion">Accordion</a></li>
+                <li><a class="sidebar-menu-button" href="#layout-divider">Divider</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-cog.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-cog-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Layout</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#layout-collapse">Collapse</a></li>
+                  <li><a class="sidebar-menu-button" href="#layout-accordion">Accordion</a></li>
+                  <li><a class="sidebar-menu-button" href="#layout-divider">Divider</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li class="sidebar-menu-item">
+            <details class="sidebar-menu-group" name="sidebar-sections">
+              <summary class="sidebar-menu-button">
+                <span class="sidebar-menu-icon">
+                  <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-wallet.svg" alt="" />
+                  <img class="sidebar-menu-icon-active" src="../assets/icon/bx-wallet-hover.svg" alt="" />
+                </span>
+                <span class="sidebar-menu-label">Overlays</span>
+              </summary>
+              <ul class="sidebar-submenu">
+                <li><a class="sidebar-menu-button" href="#overlays-dropdown">Dropdown</a></li>
+                <li><a class="sidebar-menu-button" href="#overlays-modal">Modal</a></li>
+                <li><a class="sidebar-menu-button" href="#overlays-drawer">Drawer</a></li>
+              </ul>
+              <div class="sidebar-popup">
+                <ul class="sidebar-menu">
+                  <li>
+                    <span class="sidebar-menu-button">
+                      <span class="sidebar-menu-icon">
+                        <img class="sidebar-menu-icon-normal" src="../assets/icon/bx-wallet.svg" alt="" />
+                        <img class="sidebar-menu-icon-active" src="../assets/icon/bx-wallet-hover.svg" alt="" />
+                      </span>
+                      <span class="sidebar-menu-label">Overlays</span>
+                    </span>
+                  </li>
+                  <li><a class="sidebar-menu-button" href="#overlays-dropdown">Dropdown</a></li>
+                  <li><a class="sidebar-menu-button" href="#overlays-modal">Modal</a></li>
+                  <li><a class="sidebar-menu-button" href="#overlays-drawer">Drawer</a></li>
+                </ul>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="min-w-0 flex-1">
+        <header class="demo-header navbar sticky top-0 z-30 rounded-none border-x-0 border-t-0">
+          <div class="navbar-start">
+            <label class="btn btn-ghost btn-sm hidden lg:inline-flex" for="sidebar-toggle-control">
+              <span>Collapse</span>
+            </label>
+            <div class="avatar avatar-sm lg:hidden">
+              <span class="avatar-placeholder">UI</span>
+            </div>
+            <div>
+              <h2 class="font-semibold">Components</h2>
+              <p class="text-xs opacity-70">Click a section in the sidebar to preview usage.</p>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <div class="dropdown dropdown-end lg:hidden">
+              <button class="btn btn-outline btn-sm">Sections</button>
+              <div class="dropdown-content">
+                <a class="menu-item" href="#actions-buttons">Actions</a>
+                <a class="menu-item" href="#data-table">Data Display</a>
+                <a class="menu-item" href="#forms-inputs">Forms</a>
+                <a class="menu-item" href="#navigation-navbar">Navigation</a>
+                <a class="menu-item" href="#feedback-alerts">Feedback</a>
+                <a class="menu-item" href="#layout-collapse">Layout</a>
+                <a class="menu-item" href="#overlays-dropdown">Overlays</a>
+              </div>
+            </div>
+            <div class="join">
+              <label class="btn btn-outline btn-sm join-item">
+                <input class="theme-controller sr-only" type="radio" name="theme" value="light" />
+                Light
+              </label>
+              <label class="btn btn-outline btn-sm join-item">
+                <input class="theme-controller sr-only" type="radio" name="theme" value="dark" />
+                Dark
+              </label>
+              <label class="btn btn-outline btn-sm join-item">
+                <input class="theme-controller sr-only" type="radio" name="theme" value="mssp" checked />
+                MSSP
+              </label>
+            </div>
+          </div>
+        </header>
+
+        <div class="mx-auto max-w-6xl space-y-6 p-6">
+          <section class="hero rounded-[var(--onion-radius-box)] border">
+            <div class="hero-content">
+              <div class="max-w-xl">
+                <div class="breadcrumbs mb-4">
+                  <ul>
+                    <li>OnionUI</li>
+                    <li>Examples</li>
+                    <li id="active-title">Actions</li>
+                  </ul>
+                </div>
+                <h2 class="text-3xl font-semibold">Themeable component library</h2>
+                <p class="mt-3 opacity-70">
+                  This page showcases reusable component classes with theme tokens. Switch themes to
+                  preview how the same markup adapts.
+                </p>
+              </div>
+              <div class="stats">
+                <div class="stat">
+                  <span class="stat-title">Theme</span>
+                  <span class="stat-value">
+                    <span class="theme-name theme-name-light">light</span>
+                    <span class="theme-name theme-name-dark">dark</span>
+                    <span class="theme-name theme-name-mssp">mssp</span>
+                  </span>
+                  <span class="stat-desc">CSS variables</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-title">Sections</span>
+                  <span class="stat-value">7</span>
+                  <span class="stat-desc">Clickable demos</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="actions">
+            <div class="card" id="actions-buttons">
+              <h3 class="card-title">Buttons</h3>
+              <p class="card-body opacity-70">Use variants, sizes, block layout, and shape helpers.</p>
+              <div class="card-actions flex-wrap">
+                <button class="btn">Default</button>
+                <button class="btn btn-primary">Primary</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <button class="btn btn-accent">Accent</button>
+                <button class="btn btn-outline">Outline</button>
+                <button class="btn btn-ghost">Ghost</button>
+                <button class="btn btn-link">Link</button>
+              </div>
+              <div class="mt-4 flex flex-wrap items-center gap-2">
+                <button class="btn btn-primary btn-xs">XS</button>
+                <button class="btn btn-primary btn-sm">Small</button>
+                <button class="btn btn-primary btn-md">Medium</button>
+                <button class="btn btn-primary btn-lg">Large</button>
+                <button class="btn btn-primary btn-circle">+</button>
+                <button class="btn btn-primary btn-square">OK</button>
+              </div>
+            </div>
+
+            <div class="card" id="actions-badges">
+              <h3 class="card-title">Badges, Links, Kbd</h3>
+              <div class="card-actions flex-wrap">
+                <span class="badge">Default</span>
+                <span class="badge badge-primary">Primary</span>
+                <span class="badge badge-success">Success</span>
+                <span class="badge badge-warning">Warning</span>
+                <span class="badge badge-error">Error</span>
+                <a class="link">Inline link</a>
+                <kbd class="kbd">⌘</kbd>
+                <kbd class="kbd">K</kbd>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="data">
+            <div class="card" id="data-table">
+              <h3 class="card-title">Table</h3>
+              <div class="overflow-x-auto">
+                <table class="table table-zebra">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Status</th>
+                      <th>Plan</th>
+                      <th>Usage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Northwind</td>
+                      <td><span class="badge badge-success">Active</span></td>
+                      <td>Enterprise</td>
+                      <td><progress class="progress progress-primary" value="72" max="100"></progress></td>
+                    </tr>
+                    <tr>
+                      <td>Contoso</td>
+                      <td><span class="badge badge-warning">Pending</span></td>
+                      <td>Team</td>
+                      <td><progress class="progress progress-warning" value="38" max="100"></progress></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-3">
+              <div class="card" id="data-avatar">
+                <h3 class="card-title">Avatar</h3>
+                <div class="card-actions">
+                  <div class="avatar avatar-online"><span class="avatar-placeholder">EC</span></div>
+                  <div class="avatar avatar-offline"><span class="avatar-placeholder">MS</span></div>
+                  <div class="avatar-group">
+                    <div class="avatar avatar-sm"><span class="avatar-placeholder">A</span></div>
+                    <div class="avatar avatar-sm"><span class="avatar-placeholder">B</span></div>
+                    <div class="avatar avatar-sm"><span class="avatar-placeholder">C</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="data-countdown">
+                <h3 class="card-title">Countdown</h3>
+                <span class="countdown">12:48</span>
+              </div>
+              <div class="card" id="data-progress">
+                <h3 class="card-title">Radial progress</h3>
+                <div class="radial-progress" style="--value: 68%">68%</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="forms">
+            <div class="card max-w-3xl" id="forms-inputs">
+              <h3 class="card-title">Form controls</h3>
+              <div class="card-body grid gap-4 md:grid-cols-2">
+                <label class="label">
+                  <span class="label-text">Project name</span>
+                </label>
+                <input class="input" placeholder="Managed Security Portal" />
+                <label class="label">
+                  <span class="label-text">Environment</span>
+                </label>
+                <select class="select" id="forms-select">
+                  <option>Production</option>
+                  <option>Staging</option>
+                  <option>Development</option>
+                </select>
+                <label class="label">
+                  <span class="label-text">Description</span>
+                </label>
+                <textarea class="textarea" placeholder="Write a short description"></textarea>
+                <label class="label">
+                  <span class="label-text">Upload</span>
+                </label>
+                <input class="file-input" type="file" />
+              </div>
+              <div class="card-actions" id="forms-toggles">
+                <input class="checkbox" type="checkbox" checked />
+                <input class="radio" name="demo-radio" type="radio" checked />
+                <input class="radio" name="demo-radio" type="radio" />
+                <input class="toggle" type="checkbox" checked />
+                <input class="range max-w-xs" type="range" value="60" />
+                <div class="rating">
+                  <input type="radio" name="rating" />
+                  <input type="radio" name="rating" checked />
+                  <input type="radio" name="rating" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="navigation">
+            <div class="card" id="navigation-navbar">
+              <h3 class="card-title">Navbar, Tabs, Menu</h3>
+              <div class="navbar mt-3">
+                <div class="navbar-start">
+                  <span class="font-semibold">Workspace</span>
+                </div>
+                <div class="navbar-center">
+                  <a class="navbar-link">Dashboard</a>
+                  <a class="navbar-link">Reports</a>
+                  <a class="navbar-link">Settings</a>
+                </div>
+                <div class="navbar-end">
+                  <button class="btn btn-primary btn-sm">Create</button>
+                </div>
+              </div>
+              <div class="mt-4 flex flex-wrap gap-4">
+                <div class="tabs tabs-bordered" id="navigation-tabs">
+                  <button class="tab tab-active">Overview</button>
+                  <button class="tab">Activity</button>
+                  <button class="tab">Billing</button>
+                </div>
+                <ul class="menu rounded-[var(--onion-radius-box)] border">
+                  <li class="menu-title">Menu</li>
+                  <li><a class="active">Customers</a></li>
+                  <li><a>Subscriptions</a></li>
+                  <li><a>Approvals</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card" id="navigation-steps">
+              <h3 class="card-title">Steps and Timeline</h3>
+              <ul class="steps">
+                <li class="step step-primary">Select product</li>
+                <li class="step step-primary">Fill materials</li>
+                <li class="step">Submit approval</li>
+              </ul>
+              <div class="timeline mt-6">
+                <div class="timeline-start">09:00 Created request</div>
+                <div class="timeline-middle">1</div>
+                <div class="timeline-end">10:30 Submitted approval</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="feedback">
+            <div class="grid gap-4 md:grid-cols-2" id="feedback-alerts">
+              <div class="alert alert-info">Info alert with neutral business messaging.</div>
+              <div class="alert alert-success">Success alert for completed actions.</div>
+              <div class="alert alert-warning">Warning alert for pending approvals.</div>
+              <div class="alert alert-error">Error alert for failed submissions.</div>
+            </div>
+            <div class="card" id="feedback-loading">
+              <h3 class="card-title">Loading, Skeleton, Status</h3>
+              <div class="card-actions">
+                <span class="loading loading-spinner"></span>
+                <span class="loading loading-dots"></span>
+                <span class="status status-success"></span>
+                <span class="status status-warning"></span>
+                <span class="status status-error"></span>
+              </div>
+              <div class="mt-4 grid gap-2">
+                <div class="skeleton h-4 w-3/4"></div>
+                <div class="skeleton h-4 w-1/2"></div>
+              </div>
+            </div>
+            <div class="toast" id="feedback-toast">
+              <div class="alert alert-success">Saved demo preferences.</div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="layout">
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="card" id="layout-collapse">
+                <h3 class="card-title">Collapse</h3>
+                <div class="collapse collapse-arrow mt-3">
+                  <div class="collapse-title">Service details</div>
+                  <div class="collapse-content">Expandable content for a compact layout.</div>
+                </div>
+              </div>
+              <div class="card" id="layout-accordion">
+                <h3 class="card-title">Accordion</h3>
+                <div class="accordion mt-3">
+                  <div class="accordion-item">
+                    <div class="accordion-title">Question one</div>
+                    <div class="accordion-content">Answer content goes here.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="layout-divider">
+                <h3 class="card-title">Divider and Join</h3>
+                <div class="divider">or</div>
+                <div class="join">
+                  <button class="btn join-item">Prev</button>
+                  <button class="btn btn-primary join-item">Next</button>
+                </div>
+              </div>
+              <div class="card">
+                <h3 class="card-title">Mockup</h3>
+                <div class="mockup-code mt-3">
+                  <pre><code>bun run demo:build</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="space-y-6" id="overlays">
+            <div class="card" id="overlays-dropdown">
+              <h3 class="card-title">Dropdown and Modal</h3>
+              <div class="card-actions">
+                <div class="dropdown">
+                  <button class="btn btn-outline">Open menu</button>
+                  <div class="dropdown-content">
+                    <button class="menu-item">Profile</button>
+                    <button class="menu-item">Billing</button>
+                    <button class="menu-item">Log out</button>
+                  </div>
+                </div>
+                <a class="btn btn-primary" id="overlays-modal" href="#demo-modal">Open modal</a>
+              </div>
+            </div>
+            <div class="drawer drawer-open rounded-[var(--onion-radius-box)] border" id="overlays-drawer">
+              <div class="drawer-content p-4">
+                <h3 class="font-semibold">Drawer preview</h3>
+                <p class="mt-2 text-sm opacity-70">Drawer classes are available for app shells.</p>
+              </div>
+              <div class="drawer-side static block w-64">
+                <div class="card h-full rounded-none border-y-0 border-r-0">
+                  <h3 class="card-title">Side panel</h3>
+                  <p class="card-body">Preview content</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal" id="demo-modal" aria-hidden="true">
+      <div class="modal-box">
+        <h3 class="modal-title">Confirm action</h3>
+        <p class="modal-body">
+          This modal uses the same theme tokens as every other component on the page.
+        </p>
+        <div class="modal-action">
+          <a class="btn btn-ghost" href="#overlays-modal">Cancel</a>
+          <a class="btn btn-primary" href="#overlays-modal">Confirm</a>
+        </div>
       </div>
-    </section>
-    <script>
-      const modal = document.getElementById("demo-modal");
-      const openButton = document.querySelector("[data-modal-open]");
-      const closeButtons = document.querySelectorAll("[data-modal-close]");
-
-      const openModal = () => {
-        modal.classList.add("modal-open");
-        modal.setAttribute("aria-hidden", "false");
-      };
-
-      const closeModal = () => {
-        modal.classList.remove("modal-open");
-        modal.setAttribute("aria-hidden", "true");
-      };
-
-      openButton?.addEventListener("click", openModal);
-      closeButtons.forEach((button) => {
-        button.addEventListener("click", closeModal);
-      });
-
-      modal?.addEventListener("click", (event) => {
-        if (event.target === modal) {
-          closeModal();
-        }
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closeModal();
-        }
-      });
-    </script>
+    </div>
   </body>
 </html>
