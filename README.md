@@ -64,6 +64,8 @@ Available themes:
 - `dark`
 - `mssp`
 
+The `mssp` sidebar background and active-item images are embedded into the built plugin CSS as data URLs, so consumers do not need to copy static assets manually. The original assets are also included in the npm package under `assets/`.
+
 You can also switch themes with CSS-only radio controllers:
 
 ```html
